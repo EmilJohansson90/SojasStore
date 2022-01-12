@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,8 +15,11 @@ namespace DAL
         public int BarCode { get; set; }
         public string Name { get; set; }
         public int Amount { get; set; }
-        [Column(TypeName = "Date")]
         public DateTime BestBefore { get; set; }
         public double Price { get; set; }
+        public Employee CheckedBy { get; set; }
+        public DateTime CheckedDate { get; set; }
+        public virtual List<Department> Departments { get; set; }
+
     }
 }

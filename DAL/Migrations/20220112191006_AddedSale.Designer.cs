@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(SojasStoreContext))]
-    partial class SojasStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220112191006_AddedSale")]
+    partial class AddedSale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,11 +125,8 @@ namespace DAL.Migrations
                     b.Property<DateTime>("BestBefore")
                         .HasColumnType("Date");
 
-                    b.Property<int>("CheckedByEmployeeId")
+                    b.Property<int>("ForSaleId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CheckedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -136,61 +135,22 @@ namespace DAL.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("SaleId")
-                        .HasColumnType("int");
-
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CheckedByEmployeeId");
-
-                    b.HasIndex("SaleId");
+                    b.HasIndex("ForSaleId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DepartmentProduct", b =>
-                {
-                    b.Property<int>("DepartmentsDepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DepartmentsDepartmentId", "ProductsProductId");
-
-                    b.HasIndex("ProductsProductId");
-
-                    b.ToTable("DepartmentProduct");
-                });
-
             modelBuilder.Entity("DAL.Product", b =>
                 {
-                    b.HasOne("DAL.Models.Employee", "CheckedBy")
-                        .WithMany()
-                        .HasForeignKey("CheckedByEmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.Sale", null)
+                    b.HasOne("DAL.Models.Sale", "ForSale")
                         .WithMany("ProductsOnSale")
-                        .HasForeignKey("SaleId");
-
-                    b.Navigation("CheckedBy");
-                });
-
-            modelBuilder.Entity("DepartmentProduct", b =>
-                {
-                    b.HasOne("DAL.Department", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmentsDepartmentId")
+                        .HasForeignKey("ForSaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ForSale");
                 });
 
             modelBuilder.Entity("DAL.Models.Sale", b =>

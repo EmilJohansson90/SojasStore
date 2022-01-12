@@ -11,5 +11,6 @@ namespace DAL
     {
         public int DepartmentId { get; set; }
         public string Name { get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }
