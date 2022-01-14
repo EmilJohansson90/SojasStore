@@ -15,6 +15,7 @@ namespace DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<Email> Emails { get; set; }
 
 
 
@@ -31,10 +32,11 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             base.OnModelCreating(modelbuilder);
+            modelbuilder.ApplyConfiguration(new EmployeeEntityConfig());
 
-            var e1 = new Employee() { EmployeeId = 1001, Name = "Erik", PhoneNumber = "123-456", Ssn= 1001 };
-            var e2 = new Employee() { EmployeeId = 1002, Name = "Johanna", PhoneNumber = "456-789", Ssn= 2001 };
-            var e3 = new Employee() { EmployeeId = 1003, Name = "Eva", PhoneNumber = "789-123", Ssn= 1850 };
+            var e1 = new Employee() { EmployeeId = 1001, Name = "Erik", PhoneNumber = "123-456", Ssn = 1001 };
+            var e2 = new Employee() { EmployeeId = 1002, Name = "Johanna", PhoneNumber = "456-789", Ssn = 2001 };
+            var e3 = new Employee() { EmployeeId = 1003, Name = "Eva", PhoneNumber = "789-123", Ssn = 1850 };
 
             modelbuilder.Entity<Employee>()
                 .HasData(
@@ -43,26 +45,59 @@ namespace DAL
                     e3
                 );
 
-            //var p1 = new Product() { ProductId = 10001, Name = "Mjölk", Amount = 2, BestBefore = DateTime.ParseExact("2022-01-30", "yyyy-MM-dd", null), BarCode = 123456, Price = 13.50 };
-            //var p2 = new Product() { ProductId = 10002, Name = "Kaffe", Amount = 8, BestBefore = DateTime.ParseExact("2022-09-25", "yyyy-MM-dd", null), BarCode = 222555, Price = 25.99 };
-            //var p3 = new Product() { ProductId = 10003, Name = "Grädde", Amount = 12, BestBefore = DateTime.ParseExact("2022-01-25", "yyyy-MM-dd", null), BarCode = 558874, Price = 54.20 };
-            //var p4 = new Product() { ProductId = 10004, Name = "Ost", Amount = 1, BestBefore = DateTime.ParseExact("2022-03-15", "yyyy-MM-dd", null), BarCode = 654321, Price = 108.50 };
-            //var p5 = new Product() { ProductId = 10005, Name = "Fisk", Amount = 90, BestBefore = DateTime.ParseExact("2022-01-21", "yyyy-MM-dd", null), BarCode = 258369, Price = 81.90 };
-            //var p6 = new Product() { ProductId = 10006, Name = "Bröd", Amount = 15, BestBefore = DateTime.ParseExact("2022-01-26", "yyyy-MM-dd", null), BarCode = 147258, Price = 25.90 };
+            modelbuilder.Entity<Email>()
+                .HasKey(e => new { e.Emails, e.EmployeeSsn })
+                ;
 
-            //modelbuilder.Entity<Product>()
-            //    .HasData(
-            //        p1,
-            //        p2,
-            //        p3,
-            //        p4,
-            //        p5,
-            //        p6
-            //    );
+            modelbuilder.Entity<Ingredients>()
+                .HasKey(i => new { i.Ingredient, i.ProductProductId })
+                ;
 
             modelbuilder.Entity<Product>()
                 .Property(p => p.BestBefore)
                 .HasColumnType("Date");
+
+            foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            var d1 = new Department() { DepartmentId = 10, InChargeSsn = e1.Ssn, Name = "Mejeri" };
+            var d2 = new Department() { DepartmentId = 11, InChargeSsn = e2.Ssn, Name = "Kött" };
+            var d3 = new Department() { DepartmentId = 12, InChargeSsn = e2.Ssn, Name = "Bröd" };
+            var d4 = new Department() { DepartmentId = 13, InChargeSsn = e3.Ssn, Name = "Skafferi" };
+            var d5 = new Department() { DepartmentId = 14, InChargeSsn = e1.Ssn, Name = "Grönsaker" };
+            var d6 = new Department() { DepartmentId = 15, InChargeSsn = e1.Ssn, Name = "Grönsaker" };
+
+            modelbuilder.Entity<Department>()
+                .HasData(
+                    d1,
+                    d2,
+                    d3,
+                    d4,
+                    d5,
+                    d6
+                );         
         }
     }
 }
+
+
+
+
+//var p1 = new Product() { ProductId = 10001, Name = "Mjölk", Amount = 2, BestBefore = DateTime.ParseExact("2022-01-30", "yyyy-MM-dd", null), BarCode = 123456, Price = 13.50 };
+//var p2 = new Product() { ProductId = 10002, Name = "Kaffe", Amount = 8, BestBefore = DateTime.ParseExact("2022-09-25", "yyyy-MM-dd", null), BarCode = 222555, Price = 25.99 };
+//var p3 = new Product() { ProductId = 10003, Name = "Grädde", Amount = 12, BestBefore = DateTime.ParseExact("2022-01-25", "yyyy-MM-dd", null), BarCode = 558874, Price = 54.20 };
+//var p4 = new Product() { ProductId = 10004, Name = "Ost", Amount = 1, BestBefore = DateTime.ParseExact("2022-03-15", "yyyy-MM-dd", null), BarCode = 654321, Price = 108.50 };
+//var p5 = new Product() { ProductId = 10005, Name = "Fisk", Amount = 90, BestBefore = DateTime.ParseExact("2022-01-21", "yyyy-MM-dd", null), BarCode = 258369, Price = 81.90 };
+//var p6 = new Product() { ProductId = 10006, Name = "Bröd", Amount = 15, BestBefore = DateTime.ParseExact("2022-01-26", "yyyy-MM-dd", null), BarCode = 147258, Price = 25.90 };
+
+//modelbuilder.Entity<Product>()
+//    .HasData(
+//        p1,
+//        p2,
+//        p3,
+//        p4,
+//        p5,
+//        p6
+//    );

@@ -13,13 +13,15 @@ namespace DAL
     {
         public int ProductId { get; set; }
         public int BarCode { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Amount { get; set; }
         public DateTime BestBefore { get; set; }
         public double Price { get; set; }
-        public Employee CheckedBy { get; set; }
+        public Employee? CheckedBy { get; set; }
         public DateTime CheckedDate { get; set; }
-        public virtual List<Department> Departments { get; set; }
+        public List<Department> Departments { get; set; }
+        public Sale? Sale { get; set; }
+        
 
     }
 }

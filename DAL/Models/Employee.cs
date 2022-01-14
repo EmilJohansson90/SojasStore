@@ -13,6 +13,10 @@ namespace DAL.Models
         public int Ssn { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
+        public List<Product>? Checked { get; set; }
+        public List<Department>? InChargeOf { get; set; }
+        public Employee? Mentor { get; set; }
+        public List<Email>? Emails { get; set; }
 
     }
 }
