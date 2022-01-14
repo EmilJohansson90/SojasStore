@@ -22,7 +22,5 @@ namespace DAL
         public int? CheckedBySsn { get; set; }
         public DateTime? CheckedDate { get; set; }
         public Sale? Sale { get; set; }
-        
-
     }
 }

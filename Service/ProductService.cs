@@ -44,6 +44,7 @@ namespace Service
         
 
         // -- 1B
+        
         public void UpdateProductAmount(int productId, int newAmount)
         {
             using (var context = new SojasStoreContext())
@@ -52,30 +53,6 @@ namespace Service
                 product.Amount = newAmount;
                 context.SaveChanges();
             }
-        }
-
-        public void UpdateProductAmount2(UpdateRequest updateRequest)
-        {
-            using (var context = new SojasStoreContext())
-            {
-                var product = context.Products.First(p => p.ProductId == updateRequest.ProductId);
-                product.Amount = updateRequest.NewAmount;
-                context.SaveChanges();
-            }
-        }
-
-
-
-
-        // -- Egna övningar
-        public List<Product> ListAllProducts()
-        {
-            using(var context = new SojasStoreContext())
-            {
-                return context.Products
-                    .ToList()
-                    ;
-            }
-        }
+        }  
     }
 }

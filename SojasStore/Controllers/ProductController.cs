@@ -24,27 +24,10 @@ namespace API.Controllers
         // -- 1B
 
         [HttpPut("update")]
-        public void UpdateProductAmount(int productId, int newAmount)
+        public void Update([FromBody] UpdateInventoryDTO updateInventoryDTO)
         {
             var service = new ProductService();
-            service.UpdateProductAmount(productId, newAmount);
-        }
-
-        [HttpPut("update2")]
-        public void Update([FromBody] UpdateRequest updateRequest)
-        {
-            var service = new ProductService();
-            service.UpdateProductAmount2(updateRequest);
-        }
-
-
-
-        // -- Egna övningar
-        [HttpGet("ListAllProducts")]
-        public List<Product> ListAllProducts()
-        {
-            var service = new ProductService();
-            return service.ListAllProducts();
-        }
+            service.UpdateProductAmount(updateInventoryDTO.ProductId, updateInventoryDTO.NewAmount);
+        }   
     }
 }
