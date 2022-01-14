@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(SojasStoreContext))]
-    partial class SojasStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220114075001_mailtest")]
+    partial class mailtest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,33 +102,16 @@ namespace DAL.Migrations
                         {
                             Emails = "erik@gmail.com",
                             EmployeeSsn = 1001
-                        },
-                        new
-                        {
-                            Emails = "youngNfab@live.se",
-                            EmployeeSsn = 2001
-                        },
-                        new
-                        {
-                            Emails = "jjonsson@gmail.com",
-                            EmployeeSsn = 2001
-                        },
-                        new
-                        {
-                            Emails = "evalarsson@ghotmail.com",
-                            EmployeeSsn = 1850
-                        },
-                        new
-                        {
-                            Emails = "eva@gmail.com",
-                            EmployeeSsn = 1850
                         });
                 });
 
             modelBuilder.Entity("DAL.Models.Employee", b =>
                 {
                     b.Property<int>("Ssn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Ssn"), 1L, 1);
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -227,11 +212,10 @@ namespace DAL.Migrations
                     b.Property<int?>("CheckedBySsn")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CheckedDate")
+                    b.Property<DateTime>("CheckedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -247,74 +231,6 @@ namespace DAL.Migrations
                     b.HasIndex("SaleId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 10001,
-                            Amount = 2,
-                            BarCode = 123456,
-                            BestBefore = new DateTime(2022, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 2001,
-                            CheckedDate = new DateTime(2021, 12, 30, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Mjölk",
-                            Price = 13.5
-                        },
-                        new
-                        {
-                            ProductId = 10002,
-                            Amount = 8,
-                            BarCode = 222555,
-                            BestBefore = new DateTime(2022, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 1001,
-                            CheckedDate = new DateTime(2021, 12, 25, 11, 45, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Kaffe",
-                            Price = 25.989999999999998
-                        },
-                        new
-                        {
-                            ProductId = 10003,
-                            Amount = 12,
-                            BarCode = 558874,
-                            BestBefore = new DateTime(2022, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 1001,
-                            CheckedDate = new DateTime(2022, 1, 10, 23, 45, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Grädde",
-                            Price = 54.200000000000003
-                        },
-                        new
-                        {
-                            ProductId = 10004,
-                            Amount = 1,
-                            BarCode = 654321,
-                            BestBefore = new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 1001,
-                            CheckedDate = new DateTime(2022, 1, 2, 16, 59, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Ost",
-                            Price = 108.5
-                        },
-                        new
-                        {
-                            ProductId = 10005,
-                            Amount = 90,
-                            BarCode = 258369,
-                            BestBefore = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 1850,
-                            CheckedDate = new DateTime(2022, 1, 2, 8, 25, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Fisk",
-                            Price = 81.900000000000006
-                        },
-                        new
-                        {
-                            ProductId = 10006,
-                            Amount = 15,
-                            BarCode = 147258,
-                            BestBefore = new DateTime(2022, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckedBySsn = 1850,
-                            CheckedDate = new DateTime(2022, 1, 6, 11, 35, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Bröd",
-                            Price = 25.899999999999999
-                        });
                 });
 
             modelBuilder.Entity("DepartmentProduct", b =>
