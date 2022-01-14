@@ -80,7 +80,7 @@ namespace DAL
             var d3 = new Department() { DepartmentId = 12, InChargeSsn = e2.Ssn, Name = "Bröd" };
             var d4 = new Department() { DepartmentId = 13, InChargeSsn = e3.Ssn, Name = "Skafferi" };
             var d5 = new Department() { DepartmentId = 14, InChargeSsn = e1.Ssn, Name = "Grönsaker" };
-            var d6 = new Department() { DepartmentId = 15, InChargeSsn = e1.Ssn, Name = "Grönsaker" };
+            
 
             modelbuilder.Entity<Department>()
                 .HasData(
@@ -88,8 +88,7 @@ namespace DAL
                     d2,
                     d3,
                     d4,
-                    d5,
-                    d6
+                    d5
                 );
 
             var p1 = new Product() { ProductId = 10001, Name = "Mjölk", Amount = 2, BestBefore = DateTime.ParseExact("2022-01-30", "yyyy-MM-dd", null), BarCode = 123456, Price = 13.50, CheckedDate = DateTime.ParseExact("2021-12-30 12:30", "yyyy-MM-dd HH:mm", null), CheckedBySsn = e2.Ssn };
