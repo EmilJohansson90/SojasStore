@@ -9,25 +9,33 @@ namespace API.Controllers
     [ApiController]
     public class DepartmentController : ControllerBase
     {
-        //[HttpGet]
-        //public List<DepartmentEmailDTO> ListDepartmentEmail()
-        //{
-        //    //var service = new DepartmentService();
-        //    //var emailList = service.EmailList();
-        //    //var departmentList = service.DepartmentList();
-        //    //var result = new List<DepartmentEmailDTO>();
+        [HttpGet]
+        public List<DepartmentEmailDTO> GetDepartmentsWithMail()
+        {
+            var service = new DepartmentService();
+            var departmentList = service.DepartmentList();
+            var emailList = service.EmailList();
 
-        //    //foreach (var email in emailList)
-        //    //{
-        //    //    result.Add(new DepartmentEmailDTO
-        //    //    {
-        //    //        DepartmentName = department.Name,
-        //    //        Email
-        //    //    });
-        //    //};
+            var depMailList = new List<DepartmentEmailDTO>();
 
+            foreach (var department in departmentList)
+            {
+                var stringList = new List<string>();
+                foreach (var email in emailList)
+                {
+                    if (email.EmployeeSsn == department.InChargeSsn)
+                    {
+                        stringList.Add(email.Emails);
+                    }
+                }
+                depMailList.Add(new DepartmentEmailDTO()
+                {
+                    DepartmentName = department.Name,
+                    Email = stringList
+                }); ;
+            }
 
-        //    return result;
-        //}
+            return depMailList;
+        }
     }
 }
