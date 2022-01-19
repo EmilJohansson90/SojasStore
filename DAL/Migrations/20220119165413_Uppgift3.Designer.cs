@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(SojasStoreContext))]
-    partial class SojasStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220119165413_Uppgift3")]
+    partial class Uppgift3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("InChargeSsn");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
 
                     b.HasData(
                         new
@@ -87,7 +89,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("EmployeeSsn");
 
-                    b.ToTable("Emails", (string)null);
+                    b.ToTable("Emails");
 
                     b.HasData(
                         new
@@ -140,7 +142,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("MentorSsn");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
@@ -185,7 +187,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductProductId");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("DAL.Models.Sale", b =>
@@ -205,7 +207,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sales", (string)null);
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("DAL.Product", b =>
@@ -247,7 +249,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -330,39 +332,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductsProductId");
 
-                    b.ToTable("DepartmentProduct", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentsDepartmentId = 10,
-                            ProductsProductId = 10001
-                        },
-                        new
-                        {
-                            DepartmentsDepartmentId = 13,
-                            ProductsProductId = 10002
-                        },
-                        new
-                        {
-                            DepartmentsDepartmentId = 10,
-                            ProductsProductId = 10003
-                        },
-                        new
-                        {
-                            DepartmentsDepartmentId = 10,
-                            ProductsProductId = 10004
-                        },
-                        new
-                        {
-                            DepartmentsDepartmentId = 11,
-                            ProductsProductId = 10005
-                        },
-                        new
-                        {
-                            DepartmentsDepartmentId = 12,
-                            ProductsProductId = 10006
-                        });
+                    b.ToTable("DepartmentProduct");
                 });
 
             modelBuilder.Entity("DAL.Department", b =>

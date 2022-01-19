@@ -82,7 +82,7 @@ namespace DAL
             var d3 = new Department() { DepartmentId = 12, InChargeSsn = e2.Ssn, Name = "Bröd" };
             var d4 = new Department() { DepartmentId = 13, InChargeSsn = e3.Ssn, Name = "Skafferi" };
             var d5 = new Department() { DepartmentId = 14, InChargeSsn = e1.Ssn, Name = "Grönsaker" };
-            
+
 
             modelbuilder.Entity<Department>()
                 .HasData(
@@ -109,6 +109,22 @@ namespace DAL
                     p5,
                     p6
                 );
+
+            modelbuilder.Entity<Product>()
+                .HasMany(d => d.Departments)
+                .WithMany(p => p.Products)
+                .UsingEntity(x => x.HasData(
+                    new { ProductsProductId = 10001, DepartmentsDepartmentId = 10 },
+                    new { ProductsProductId = 10002, DepartmentsDepartmentId = 13 },
+                    new { ProductsProductId = 10003, DepartmentsDepartmentId = 10 },
+                    new { ProductsProductId = 10004, DepartmentsDepartmentId = 10 },
+                    new { ProductsProductId = 10005, DepartmentsDepartmentId = 11 },
+                    new { ProductsProductId = 10006, DepartmentsDepartmentId = 12 }
+                    ));
+
+
+
+
 
             //---Koder för att förhindra Identity-felkoder-- -
             foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

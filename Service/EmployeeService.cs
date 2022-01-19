@@ -22,12 +22,17 @@ namespace Service
 
         public List<int> GetResponsibleSsn()
         {
-            List<Employee> employees = GetEmployeeList();
+            List<Department> departmentList = new List<Department>();
             List<int> ssnList = new List<int>();
 
-            foreach(var employee in employees)
+            using (var context = new SojasStoreContext())
             {
-                ssnList.Add(employee.Ssn);
+                departmentList = context.Departments.ToList();
+            }
+
+            foreach (var department in departmentList)
+            {
+                ssnList.Add(department.InChargeSsn);
             }
             return ssnList;
         }

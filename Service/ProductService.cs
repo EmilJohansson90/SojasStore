@@ -53,6 +53,21 @@ namespace Service
                 product.Amount = newAmount;
                 context.SaveChanges();
             }
-        }  
+        }
+        
+        public List<string> ProductList(string department, int count)
+        {            
+            using (var context = new SojasStoreContext())
+            {
+                var productList = context.Products
+                    .Where(p => p.Amount <= count && (p.Departments.Any(d => d.Name == department)))
+                    .Include(d => d.Departments)
+                    .Select(p => p.Name)
+                    .ToList();
+                return productList;
+            }
+        }
+
+
     }
 }

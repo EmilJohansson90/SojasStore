@@ -16,8 +16,6 @@ namespace API.Controllers
         [HttpGet]
         public List<EmployeeListDTO> EmployeeList()
         {
-
-
             var service = new EmployeeService();
             var employeeList = service.GetEmployeeList();
             var responsibleSsn = service.GetResponsibleSsn();
@@ -26,32 +24,20 @@ namespace API.Controllers
 
             foreach (var employee in employeeList)
             {
-                if (responsibleSsn.Contains(employee.Ssn))
+                employeeInfoListDTO.Add(new EmployeeInfoDTO()
                 {
-                    employeeInfoListDTO.Add(new EmployeeInfoDTO()
-                    {
-                        Name = employee.Name,
-                        IsResponsible = true
-                    });
-                }
-                else
-                {
-                    employeeInfoListDTO.Add(new EmployeeInfoDTO()
-                    {
-                        Name = employee.Name,
-                        IsResponsible = false
-                    });
-                }
+                    Name = employee.Name,
+                    IsResponsible = responsibleSsn.Contains(employee.Ssn)
+                });
             }
 
             var employeeListDTO = new List<EmployeeListDTO>();
 
-            employeeListDTO.Add( new EmployeeListDTO
+            employeeListDTO.Add(new EmployeeListDTO
             {
                 Count = employeeList.Count,
                 EmployeeInfo = employeeInfoListDTO
             });
-
 
             return employeeListDTO;
         }
