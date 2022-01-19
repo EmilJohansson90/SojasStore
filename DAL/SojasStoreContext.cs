@@ -53,12 +53,14 @@ namespace DAL
             var e1 = new Employee() { EmployeeId = 1001, Name = "Erik", PhoneNumber = "123-456", Ssn = 1001 };
             var e2 = new Employee() { EmployeeId = 1002, Name = "Johanna", PhoneNumber = "456-789", Ssn = 2001 };
             var e3 = new Employee() { EmployeeId = 1003, Name = "Eva", PhoneNumber = "789-123", Ssn = 1850 };
+            var e4 = new Employee() { EmployeeId = 1004, Name = "Lars", PhoneNumber = "112-123", Ssn = 1833 };
 
             modelbuilder.Entity<Employee>()
                 .HasData(
                     e1,
                     e2,
-                    e3
+                    e3,
+                    e4
                 );
 
             var mail1 = new Email() { Emails = "erik@gmail.com", EmployeeSsn = e1.Ssn };
