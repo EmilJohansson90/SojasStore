@@ -44,12 +44,7 @@ namespace API.Controllers
                 }
             }
 
-            System.Collections.Generic.List<EmployeeInfoDTO> lists = new List<EmployeeInfoDTO>();
-            lists.AddRange(employeeInfoListDTO);
-
-
-
-            List<EmployeeListDTO> employeeListDTO = new List<EmployeeListDTO>();
+            var employeeListDTO = new List<EmployeeListDTO>();
 
             employeeListDTO.Add( new EmployeeListDTO
             {
